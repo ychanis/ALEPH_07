@@ -1,0 +1,49 @@
+{
+  "version": 2,
+  "database": "Cloudflare D1 (SQLite)",
+  "tables": {
+    "completions": {
+      "definition": "`task_id` text PRIMARY KEY NOT NULL,\n\t`at` text NOT NULL,\n\tFOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON UPDATE no action ON DELETE no action"
+    },
+    "plans": {
+      "definition": "`id` text PRIMARY KEY NOT NULL,\n\t`title` text NOT NULL,\n\t`start` text NOT NULL,\n\t`end` text NOT NULL,\n\t`priority` text NOT NULL,\n\t`criterion` text NOT NULL,\n\t`estimate` integer NOT NULL,\n\t`improvement` text DEFAULT '' NOT NULL"
+    },
+    "reviews": {
+      "definition": "`id` text PRIMARY KEY NOT NULL,\n\t`plan_id` text NOT NULL,\n\t`start` text NOT NULL,\n\t`end` text NOT NULL,\n\t`improvement` text NOT NULL,\n\t`next_plan_id` text,\n\tFOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`) ON UPDATE no action ON DELETE no action,\n\tFOREIGN KEY (`next_plan_id`) REFERENCES `plans`(`id`) ON UPDATE no action ON DELETE no action"
+    },
+    "revisions": {
+      "definition": "`id` text PRIMARY KEY NOT NULL,\n\t`plan_id` text NOT NULL,\n\t`snapshot` text NOT NULL,\n\t`at` text NOT NULL,\n\tFOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`) ON UPDATE no action ON DELETE no action"
+    },
+    "runs": {
+      "definition": "`id` text PRIMARY KEY NOT NULL,\n\t`task_id` text NOT NULL,\n\t`start` text NOT NULL,\n\t`end` text NOT NULL,\n\t`minutes` integer NOT NULL,\n\t`reason` text NOT NULL,\n\t`note` text NOT NULL,\n\t`request_key` text NOT NULL,\n\tFOREIGN KEY (`task_id`) REFERENCES `tasks`(`id`) ON UPDATE no action ON DELETE no action"
+    },
+    "tasks": {
+      "definition": "`id` text PRIMARY KEY NOT NULL,\n\t`plan_id` text NOT NULL,\n\t`title` text NOT NULL,\n\t`due` text NOT NULL,\n\t`priority` text NOT NULL,\n\t`tags` text NOT NULL,\n\t`estimate` integer NOT NULL,\n\t`status` text DEFAULT 'active' NOT NULL,\n\t`deleted` integer DEFAULT 0 NOT NULL,\n\t`created` text NOT NULL,\n\tFOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`) ON UPDATE no action ON DELETE no action"
+    }
+  },
+  "relations": [
+    "tasks.plan_id → plans.id",
+    "runs.task_id → tasks.id",
+    "revisions.plan_id → plans.id",
+    "completions.task_id → tasks.id (primary key: one current completion)",
+    "reviews.plan_id → plans.id",
+    "reviews.next_plan_id → plans.id"
+  ],
+  "rules": {
+    "date": "YYYY-MM-DD, Asia/Seoul calendar dates",
+    "timestamps": "UTC ISO 8601; inputs and display Asia/Seoul",
+    "unit": "integer minutes; rounded elapsed duration",
+    "scope": "selected plan, non-deleted tasks with due date inside inclusive review period",
+    "planned_count": "target task count",
+    "completed_count": "target tasks currently done",
+    "delayed_count": "target tasks not done and due < Seoul today",
+    "blocked_count": "distinct target tasks with any nonblank run.reason",
+    "estimate": "sum of target task estimates",
+    "actual": "sum of all runs linked to target tasks",
+    "difference": "actual - estimate; empty sums 0",
+    "history": "atomic batch snapshots before update; stable plan ID",
+    "idempotency": "completions task_id primary key; runs request_key unique",
+    "delete": "soft delete; export retains all records",
+    "export": "all six tables as one JSON file"
+  }
+}
