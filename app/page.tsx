@@ -20,7 +20,14 @@ const visible=tasks.filter((t:Row)=>(t.title+' '+t.tags).toLowerCase().includes(
 const localTime=(s:string)=>new Date(new Date(s).getTime()+9*60*60*1000).toISOString().slice(0,16);
 const openTask=(t?:Row)=>{setForm(t?{...t}:{plan_id:plan,title:'',due:p?.end||today(),priority:'보통',tags:'',estimate:0});setModal('task');};
 const openPlan=(old?:Row)=>{setForm(old?{...old}:{title:'',start:today(),end:'2026-12-31',priority:'보통',criterion:'',estimate:0,improvement:''});setModal('plan');};
-const field=(key:string,label:string,type='text')=><label key={key}>{label}<input required={key!=='reason'&&key!=='note'&&key!=='tags'&&(key!=='improvement'||modal==='review')} type={type} min={type==='number'?0:undefined} value={form[key]??''} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>;
+const field=(key:string,label:string,type='text')=>{
+ if(type==='datetime-local'){
+  const value=form[key]||'';const date=value.slice(0,10),hour=value.slice(11,13)||'00',minute=value.slice(14,16)||'00';
+  const update=(d:string,h:string,m:string)=>setForm({...form,[key]:d?d+'T'+h+':'+m:''});
+  return <fieldset className="timefield" key={key}><legend>{label} · 24시간제</legend><div><input aria-label={label+' 날짜'} required type="date" value={date} onChange={e=>update(e.target.value,hour,minute)}/><Choice value={hour} onChange={(h:string)=>update(date,h,minute)} options={Array.from({length:24},(_,i)=>[String(i).padStart(2,'0'),String(i).padStart(2,'0')+'시'])}/><Choice value={minute} onChange={(m:string)=>update(date,hour,m)} options={Array.from({length:60},(_,i)=>[String(i).padStart(2,'0'),String(i).padStart(2,'0')+'분'])}/></div><small>낮 12시 = 12시 / 밤 12시(자정) = 00시</small></fieldset>;
+ }
+ return <label key={key}>{label}{key==='note'&&<small>공부한 주제나 작업 내용을 적어 주세요. 필수 항목이에요.</small>}<input required={key!=='reason'&&key!=='tags'&&(key!=='improvement'||modal==='review')} type={type} min={type==='number'?0:undefined} value={form[key]??''} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>;
+};
 return <main><header><div className="brand"><span className="mark"><BookOpen size={24}/></span><div><strong>플랜두씨</strong><small>나의 계획과 실제를 잇는 다이어리</small></div></div><button className="secondary" onClick={()=>{const blob=new Blob([JSON.stringify({...data,exported_at:new Date().toISOString(),timezone:'Asia/Seoul',unit:'minutes'},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='pds-diary.json';a.click();URL.revokeObjectURL(url);}}><Download size={17}/>전체 내보내기</button></header>
 <div className="notice">지금은 로그인이 없어 링크를 아는 사람은 누구나 볼 수 있습니다. 남이 봐도 괜찮은 내용만 넣으세요</div>
 {error&&<div role="alert" className="error">{error} <button onClick={load}>다시 불러오기</button></div>}{message&&<div role="status" className="saved">{message}</div>}
