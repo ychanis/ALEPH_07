@@ -1,7 +1,7 @@
 import {DatabaseSync} from 'node:sqlite';
 import fs from 'node:fs';import ts from 'typescript';import assert from 'node:assert/strict';
 const sql=new DatabaseSync(':memory:');sql.exec(fs.readFileSync('drizzle/0000_rare_harrier.sql','utf8'));
-const db={prepare(s){return {bind(...values){return {async run(){return sql.prepare(s).run(...values)},async first(){return sql.prepare(s).get(...values)},s,values}},s,values:[]}},async batch(items){sql.exec('BEGIN');try{const result=items.map(x=>{const stmt=sql.prepare(x.s);if(/^SELECT/i.test(x.s))return {results:stmt.all(...x.values)};stmt.run(...x.values);return {results:[]}});sql.exec('COMMIT');return result}catch(e){sql.exec('ROLLBACK');throw e}}};globalThis.testDB=db;
+const db={prepare(s){return {async first(){return sql.prepare(s).get()},bind(...values){return {async run(){return sql.prepare(s).run(...values)},async first(){return sql.prepare(s).get(...values)},s,values}},s,values:[]}},async batch(items){sql.exec('BEGIN');try{const result=items.map(x=>{const stmt=sql.prepare(x.s);if(/^SELECT/i.test(x.s))return {results:stmt.all(...x.values)};stmt.run(...x.values);return {results:[]}});sql.exec('COMMIT');return result}catch(e){sql.exec('ROLLBACK');throw e}}};globalThis.testDB=db;
 const source=fs.readFileSync('app/api/data/route.ts','utf8').replace("import {database} from '@/db/raw';",'const database=()=>globalThis.testDB;');const js=ts.transpile(source,{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});const api=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
 const get=async()=>await(await api.GET()).json();const post=async b=>{const r=await api.POST(new Request('https://test/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}));assert.equal(r.status,200,JSON.stringify(await r.clone().json()));return r.json()};
 let d=await get();assert.equal(d.tasks.length,5);assert.equal(d.runs.length,0);const p=d.plans[0];await post({action:'plan',value:{...p,criterion:'<script>alert(1)</script>'}});d=await get();assert.equal(JSON.parse(d.revisions[0].snapshot).criterion,p.criterion);assert.equal(d.plans[0].id,p.id);
@@ -10,4 +10,14 @@ const r={task_id:'task-4',start:'2026-10-04T21:00:00+09:00',end:'2026-10-04T22:0
 const snapshot=JSON.stringify(d);assert.equal(JSON.stringify(await get()),snapshot);
 await post({action:'reopen',id:'task-4'});assert.equal((await get()).completions.length,0);await post({action:'review',value:{plan_id:p.id,start:p.start,end:p.end,improvement:'학습 범위를 더 작게 나누기',title:'다음 계획',next_start:'2027-01-01',next_end:'2027-01-31'}});d=await get();assert.equal(d.plans.find(x=>x.id===d.reviews[0].next_plan_id).improvement,d.reviews[0].improvement);
 await post({action:'delete',id:'task-0'});assert.equal((await get()).tasks.filter(t=>!t.deleted).length,4);
-console.log('PASS: 계획 이력, 할 일 5건, 완료 중복 방지, 완료 집계, 실행 중복 방지, 60분 계산, 계획 값 보존, 재조회 복원, 되돌리기, 다음 계획 연결, 삭제');
+const runId=d.runs[0].id;await post({action:'run',value:{...r,id:runId,end:'2026-10-04T21:30:00+09:00'}});assert.equal((await get()).runs[0].minutes,30);await post({action:'delete-run',id:runId});assert.equal((await get()).runs.length,0);const bad=await api.POST(new Request('https://test/api/data',{method:'POST',body:JSON.stringify({action:'run',value:{...r,end:'2099-01-01T00:00:00+09:00'}})}));assert.equal(bad.status,400);
+console.log('PASS: 실행 수정·삭제, 미래 시간 거절, 계획 이력, 할 일 5건, 완료 중복 방지, 완료 집계, 실행 중복 방지, 60분 계산, 계획 값 보존, 재조회 복원, 되돌리기, 다음 계획 연결, 삭제');
+
+const reviewJS=ts.transpile(fs.readFileSync('lib/review.ts','utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});
+const {reviewEvidence}=await import('data:text/javascript;base64,'+Buffer.from(reviewJS).toString('base64'));
+const fixture=[{id:'a',plan_id:'p',due:'2026-10-04',status:'done',deleted:0,estimate:60},{id:'b',plan_id:'p',due:'2026-10-04',status:'active',deleted:0,estimate:30},{id:'c',plan_id:'p',due:'2026-10-05',status:'active',deleted:0,estimate:20},{id:'d',plan_id:'p',due:'2026-10-04',status:'active',deleted:1,estimate:100}];
+const proof=reviewEvidence(fixture,[{task_id:'a',minutes:70,reason:'막힘'},{task_id:'a',minutes:10,reason:'다시 막힘'},{task_id:'d',minutes:100,reason:'삭제됨'}],'p','2026-10-01','2026-10-31','2026-10-05');
+assert.deepEqual([proof.target.length,proof.done.length,proof.late.length,proof.blocked.length,proof.estimate,proof.actual,proof.difference],[3,1,1,1,110,80,-30]);
+assert.equal(reviewEvidence([],[],'p','','','').difference,0);
+const {createElement}=await import('react');const {renderToStaticMarkup}=await import('react-dom/server');const escaped=renderToStaticMarkup(createElement('p',null,'<script>alert(1)</script>'));assert.ok(!escaped.includes('<script>'));assert.ok(escaped.includes('&lt;script&gt;'));
+console.log('PASS: 집계 7항목, 삭제 제외, 막힘 중복 제외, 완료 지연 제외, 오늘 마감 제외, 빈 합계 0, 스크립트 문자 렌더링');

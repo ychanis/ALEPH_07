@@ -44,6 +44,8 @@
     "history": "atomic batch snapshots before update; stable plan ID",
     "idempotency": "completions task_id primary key; runs request_key unique",
     "delete": "soft delete; export retains all records",
-    "export": "all six tables as one JSON file"
+    "export": "all six tables as one JSON file",
+    "execution_edit": "update same run ID; recalculated duration; delete removes run and its aggregation",
+    "execution_validation": "positive duration <= 24h, no future end, note required"
   }
 }
