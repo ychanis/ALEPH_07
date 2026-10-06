@@ -1,0 +1,1290 @@
+{
+  "environment": "실제 API 코드 + Node HTTP + 메모리 SQLite D1 adapter. Cloudflare 배포 환경 검증과 구분함.",
+  "executed_at": "2026-10-06T00:37:17.698Z",
+  "passed": 46,
+  "evidence": [
+    {
+      "label": "가입 test-a",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "가입 test-b",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "test-b",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "중복 가입",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 409,
+        "body": {
+          "error": "이미 가입된 아이디예요."
+        }
+      }
+    },
+    {
+      "label": "잘못된 비밀번호",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "아이디 또는 비밀번호를 확인해 주세요."
+        }
+      }
+    },
+    {
+      "label": "없는 아이디",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-unknown",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "아이디 또는 비밀번호를 확인해 주세요."
+        }
+      }
+    },
+    {
+      "label": "같은 비밀번호·서로 다른 bcrypt salt",
+      "database": [
+        {
+          "username": "test-a",
+          "password_hash": "$2b$12$pUcSTQwx922X3EooCS7lKu/TReiBCzNcjIF96mD8v28jGdBh7Qf.2"
+        },
+        {
+          "username": "test-b",
+          "password_hash": "$2b$12$u5Kt0sYesrYZ/ou3J8J3QOBdKO5BJLfYrbw1OJ20vh.jwBUEkYCIq"
+        }
+      ]
+    },
+    {
+      "label": "로그인 A",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791275834949
+        }
+      }
+    },
+    {
+      "label": "로그인 B",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-b",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791275835344
+        }
+      }
+    },
+    {
+      "label": "A 계획 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "value": {
+            "title": "A 자료",
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "집중 학습",
+            "estimate": 30,
+            "improvement": ""
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "388f119d-83d7-4637-9223-f703be1662ca"
+        }
+      }
+    },
+    {
+      "label": "B 계획 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "value": {
+            "title": "B 자료",
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "집중 학습",
+            "estimate": 30,
+            "improvement": ""
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "51c3c4c8-79d8-47fc-984c-2299657881b6"
+        }
+      }
+    },
+    {
+      "label": "A 할 일 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "title": "A 학습",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 30
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b"
+        }
+      }
+    },
+    {
+      "label": "B 할 일 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "title": "B 학습",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 30
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "a34e8769-72e0-46a7-96af-930adc609bc9"
+        }
+      }
+    },
+    {
+      "label": "A 내 할 일 읽기 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+          "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+          "title": "A 학습",
+          "due": "2026-12-31",
+          "priority": "보통",
+          "tags": "",
+          "estimate": 30,
+          "status": "active",
+          "deleted": 0,
+          "created": "2026-10-06T00:37:15.357Z"
+        }
+      }
+    },
+    {
+      "label": "B 내 할 일 읽기 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=a34e8769-72e0-46a7-96af-930adc609bc9",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
+          "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+          "title": "B 학습",
+          "due": "2026-12-31",
+          "priority": "보통",
+          "tags": "",
+          "estimate": 30,
+          "status": "active",
+          "deleted": 0,
+          "created": "2026-10-06T00:37:15.361Z"
+        }
+      }
+    },
+    {
+      "label": "A 정상 목록",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.357Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "B 정상 목록",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
+              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.361Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "A→B 읽기 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=a34e8769-72e0-46a7-96af-930adc609bc9",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "A→B 수정 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
+            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "title": "변조",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "A→B 삭제 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete",
+          "id": "a34e8769-72e0-46a7-96af-930adc609bc9"
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "A→B 남의 계획에 새 자료 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "title": "침입",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "B→A 읽기 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "B→A 수정 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "title": "변조",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "B→A 삭제 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete",
+          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b"
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "B→A 남의 계획에 새 자료 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "title": "침입",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "URL·헤더에 B ID 위조",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?user_id=df9cdcc6-7b21-47ca-9bcb-6022670b795e",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]",
+          "X-User-Id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.357Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "본문 B ID 위조해도 내 새 계획 소유",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "user_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e",
+          "value": {
+            "title": "위조 소유자 테스트",
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "집중 학습",
+            "estimate": 30,
+            "improvement": "",
+            "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d"
+        }
+      }
+    },
+    {
+      "label": "거절 후 B 전체자료 불변",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
+              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.361Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "거절 후 A 원래자료 불변",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            },
+            {
+              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "title": "위조 소유자 테스트",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.357Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "비로그인 직접 요청",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {},
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "비로그인 직접 내보내기",
+      "request": {
+        "method": "GET",
+        "path": "/api/export",
+        "headers": {},
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "로그아웃 전 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            },
+            {
+              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "title": "위조 소유자 테스트",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.357Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "A 로그아웃",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "logout"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "동일 주소·방식·기존 쿠키 재전송 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "비밀번호 변경 전 B 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
+              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "title": "B 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.361Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "B 비밀번호 변경",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "password",
+          "password": "[REDACTED]",
+          "newPassword": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "비밀번호 변경 후 기존 쿠키 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "A 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791275836646
+        }
+      }
+    },
+    {
+      "label": "1일차 설정 고정",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "start",
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "rule": "하루 30분"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:37:16.670Z",
+          "days": [],
+          "change": null
+        }
+      }
+    },
+    {
+      "label": "실제 오늘 기록",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 30,
+          "note": "테스트용, 실제 사용자 기록이 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:37:16.670Z",
+          "days": [
+            {
+              "id": "e16b5886-326b-46d5-b9de-e6464d056b8b",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:37:16.673Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            }
+          ],
+          "change": null
+        }
+      }
+    },
+    {
+      "label": "같은 날짜 중복 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 40,
+          "note": "중복"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "오늘 기록은 이미 저장했어요."
+        }
+      }
+    },
+    {
+      "label": "1일차에 규칙 변경 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "change",
+          "rule": "하루 40분",
+          "reason": "테스트"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "2일차 기록 뒤, 3일차 기록 전에 한 번만 변경할 수 있어요."
+        }
+      }
+    },
+    {
+      "label": "내 자료 전체 내보내기",
+      "request": {
+        "method": "GET",
+        "path": "/api/export",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 자료",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            },
+            {
+              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "title": "위조 소유자 테스트",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "집중 학습",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "title": "A 학습",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:37:15.357Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": [],
+          "experiment": {
+            "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+            "metric": "하루 집중 학습 시간",
+            "unit": "분",
+            "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+            "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+            "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+            "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+            "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+            "weekStart": "월요일",
+            "initialRule": "하루 30분",
+            "created": "2026-10-06T00:37:16.670Z",
+            "days": [
+              {
+                "id": "e16b5886-326b-46d5-b9de-e6464d056b8b",
+                "date": "2026-10-06",
+                "at": "2026-10-06T00:37:16.673Z",
+                "minutes": 30,
+                "note": "테스트용, 실제 사용자 기록이 아님",
+                "outlierReason": "",
+                "rule": "하루 30분"
+              }
+            ],
+            "change": null
+          },
+          "exported_at": "2026-10-06T00:37:16.683Z",
+          "timezone": "Asia/Seoul",
+          "unit": "minutes"
+        }
+      }
+    },
+    {
+      "label": "만료 확인용 로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791275837108
+        }
+      }
+    },
+    {
+      "label": "만료된 세션 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "계정 삭제",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete-account",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "삭제 후 쿠키 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    }
+  ]
+}
