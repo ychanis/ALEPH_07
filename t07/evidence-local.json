@@ -1,7 +1,7 @@
 {
   "environment": "실제 API 코드 + Node HTTP + 메모리 SQLite D1 adapter. Cloudflare 배포 환경 검증과 구분함.",
-  "executed_at": "2026-10-06T00:37:17.698Z",
-  "passed": 46,
+  "executed_at": "2026-10-06T00:40:39.882Z",
+  "passed": 58,
   "evidence": [
     {
       "label": "가입 test-a",
@@ -103,11 +103,11 @@
       "database": [
         {
           "username": "test-a",
-          "password_hash": "$2b$12$pUcSTQwx922X3EooCS7lKu/TReiBCzNcjIF96mD8v28jGdBh7Qf.2"
+          "password_hash": "$2b$12$atZqM6NBmyzphOieT/3kuuDeyxSrjc4YIMgVJl02xXLOGcnOmR1yG"
         },
         {
           "username": "test-b",
-          "password_hash": "$2b$12$u5Kt0sYesrYZ/ou3J8J3QOBdKO5BJLfYrbw1OJ20vh.jwBUEkYCIq"
+          "password_hash": "$2b$12$jL7vwmmAbiSe7VJyBeYpku/zZhublTMOjtDkf4uRhHDUX80dKO45m"
         }
       ]
     },
@@ -127,7 +127,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "expires": 1791275834949
+          "expires": 1791276035656
         }
       }
     },
@@ -147,7 +147,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "expires": 1791275835344
+          "expires": 1791276036049
         }
       }
     },
@@ -176,7 +176,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "id": "388f119d-83d7-4637-9223-f703be1662ca"
+          "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21"
         }
       }
     },
@@ -205,7 +205,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "id": "51c3c4c8-79d8-47fc-984c-2299657881b6"
+          "id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999"
         }
       }
     },
@@ -220,7 +220,7 @@
         "body": {
           "action": "task",
           "value": {
-            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
             "title": "A 학습",
             "due": "2026-12-31",
             "priority": "보통",
@@ -233,7 +233,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b"
+          "id": "825911e8-a956-4f63-af21-8229dead103d"
         }
       }
     },
@@ -248,7 +248,7 @@
         "body": {
           "action": "task",
           "value": {
-            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
             "title": "B 학습",
             "due": "2026-12-31",
             "priority": "보통",
@@ -261,7 +261,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "id": "a34e8769-72e0-46a7-96af-930adc609bc9"
+          "id": "982b1200-395d-4a43-8756-9d858a14d5e5"
         }
       }
     },
@@ -269,7 +269,7 @@
       "label": "A 내 할 일 읽기 성공",
       "request": {
         "method": "GET",
-        "path": "/api/data?kind=tasks&id=72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+        "path": "/api/data?kind=tasks&id=825911e8-a956-4f63-af21-8229dead103d",
         "headers": {
           "Cookie": "pds_session=[REDACTED]"
         },
@@ -278,8 +278,8 @@
       "response": {
         "status": 200,
         "body": {
-          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-          "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+          "id": "825911e8-a956-4f63-af21-8229dead103d",
+          "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
           "title": "A 학습",
           "due": "2026-12-31",
           "priority": "보통",
@@ -287,7 +287,7 @@
           "estimate": 30,
           "status": "active",
           "deleted": 0,
-          "created": "2026-10-06T00:37:15.357Z"
+          "created": "2026-10-06T00:40:36.062Z"
         }
       }
     },
@@ -295,7 +295,7 @@
       "label": "B 내 할 일 읽기 성공",
       "request": {
         "method": "GET",
-        "path": "/api/data?kind=tasks&id=a34e8769-72e0-46a7-96af-930adc609bc9",
+        "path": "/api/data?kind=tasks&id=982b1200-395d-4a43-8756-9d858a14d5e5",
         "headers": {
           "Cookie": "pds_session=[REDACTED]"
         },
@@ -304,8 +304,8 @@
       "response": {
         "status": 200,
         "body": {
-          "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
-          "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+          "id": "982b1200-395d-4a43-8756-9d858a14d5e5",
+          "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
           "title": "B 학습",
           "due": "2026-12-31",
           "priority": "보통",
@@ -313,7 +313,7 @@
           "estimate": 30,
           "status": "active",
           "deleted": 0,
-          "created": "2026-10-06T00:37:15.361Z"
+          "created": "2026-10-06T00:40:36.067Z"
         }
       }
     },
@@ -332,7 +332,7 @@
         "body": {
           "plans": [
             {
-              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -340,13 +340,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             }
           ],
           "tasks": [
             {
-              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "825911e8-a956-4f63-af21-8229dead103d",
+              "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -354,7 +354,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.357Z"
+              "created": "2026-10-06T00:40:36.062Z"
             }
           ],
           "runs": [],
@@ -379,7 +379,7 @@
         "body": {
           "plans": [
             {
-              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -387,13 +387,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+              "owner_id": "01628bab-bec8-4ac5-8537-a48259a8a2bd"
             }
           ],
           "tasks": [
             {
-              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
-              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "982b1200-395d-4a43-8756-9d858a14d5e5",
+              "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -401,7 +401,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.361Z"
+              "created": "2026-10-06T00:40:36.067Z"
             }
           ],
           "runs": [],
@@ -415,7 +415,7 @@
       "label": "A→B 읽기 거절",
       "request": {
         "method": "GET",
-        "path": "/api/data?kind=tasks&id=a34e8769-72e0-46a7-96af-930adc609bc9",
+        "path": "/api/data?kind=tasks&id=982b1200-395d-4a43-8756-9d858a14d5e5",
         "headers": {
           "Cookie": "pds_session=[REDACTED]"
         },
@@ -439,8 +439,8 @@
         "body": {
           "action": "task",
           "value": {
-            "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
-            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "id": "982b1200-395d-4a43-8756-9d858a14d5e5",
+            "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
             "title": "변조",
             "due": "2026-12-31",
             "priority": "보통",
@@ -466,7 +466,7 @@
         },
         "body": {
           "action": "delete",
-          "id": "a34e8769-72e0-46a7-96af-930adc609bc9"
+          "id": "982b1200-395d-4a43-8756-9d858a14d5e5"
         }
       },
       "response": {
@@ -487,7 +487,7 @@
         "body": {
           "action": "task",
           "value": {
-            "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+            "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
             "title": "침입",
             "due": "2026-12-31",
             "priority": "보통",
@@ -507,7 +507,7 @@
       "label": "B→A 읽기 거절",
       "request": {
         "method": "GET",
-        "path": "/api/data?kind=tasks&id=72d6421f-e889-4f2e-8d5a-6d54f51c117b",
+        "path": "/api/data?kind=tasks&id=825911e8-a956-4f63-af21-8229dead103d",
         "headers": {
           "Cookie": "pds_session=[REDACTED]"
         },
@@ -531,8 +531,8 @@
         "body": {
           "action": "task",
           "value": {
-            "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "id": "825911e8-a956-4f63-af21-8229dead103d",
+            "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
             "title": "변조",
             "due": "2026-12-31",
             "priority": "보통",
@@ -558,7 +558,7 @@
         },
         "body": {
           "action": "delete",
-          "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b"
+          "id": "825911e8-a956-4f63-af21-8229dead103d"
         }
       },
       "response": {
@@ -579,7 +579,7 @@
         "body": {
           "action": "task",
           "value": {
-            "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+            "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
             "title": "침입",
             "due": "2026-12-31",
             "priority": "보통",
@@ -599,10 +599,10 @@
       "label": "URL·헤더에 B ID 위조",
       "request": {
         "method": "GET",
-        "path": "/api/data?user_id=df9cdcc6-7b21-47ca-9bcb-6022670b795e",
+        "path": "/api/data?user_id=01628bab-bec8-4ac5-8537-a48259a8a2bd",
         "headers": {
           "Cookie": "pds_session=[REDACTED]",
-          "X-User-Id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+          "X-User-Id": "01628bab-bec8-4ac5-8537-a48259a8a2bd"
         },
         "body": null
       },
@@ -611,7 +611,7 @@
         "body": {
           "plans": [
             {
-              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -619,13 +619,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             }
           ],
           "tasks": [
             {
-              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "825911e8-a956-4f63-af21-8229dead103d",
+              "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -633,7 +633,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.357Z"
+              "created": "2026-10-06T00:40:36.062Z"
             }
           ],
           "runs": [],
@@ -653,7 +653,7 @@
         },
         "body": {
           "action": "plan",
-          "user_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e",
+          "user_id": "01628bab-bec8-4ac5-8537-a48259a8a2bd",
           "value": {
             "title": "위조 소유자 테스트",
             "start": "2026-10-06",
@@ -662,7 +662,7 @@
             "criterion": "집중 학습",
             "estimate": 30,
             "improvement": "",
-            "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+            "owner_id": "01628bab-bec8-4ac5-8537-a48259a8a2bd"
           }
         }
       },
@@ -670,7 +670,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d"
+          "id": "8f3d989d-2062-4835-ae40-fd74e87262db"
         }
       }
     },
@@ -689,7 +689,7 @@
         "body": {
           "plans": [
             {
-              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -697,13 +697,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+              "owner_id": "01628bab-bec8-4ac5-8537-a48259a8a2bd"
             }
           ],
           "tasks": [
             {
-              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
-              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "982b1200-395d-4a43-8756-9d858a14d5e5",
+              "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -711,7 +711,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.361Z"
+              "created": "2026-10-06T00:40:36.067Z"
             }
           ],
           "runs": [],
@@ -736,7 +736,7 @@
         "body": {
           "plans": [
             {
-              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -744,10 +744,10 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             },
             {
-              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "id": "8f3d989d-2062-4835-ae40-fd74e87262db",
               "title": "위조 소유자 테스트",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -755,13 +755,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             }
           ],
           "tasks": [
             {
-              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "825911e8-a956-4f63-af21-8229dead103d",
+              "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -769,7 +769,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.357Z"
+              "created": "2026-10-06T00:40:36.062Z"
             }
           ],
           "runs": [],
@@ -824,7 +824,7 @@
         "body": {
           "plans": [
             {
-              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -832,10 +832,10 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             },
             {
-              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "id": "8f3d989d-2062-4835-ae40-fd74e87262db",
               "title": "위조 소유자 테스트",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -843,13 +843,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             }
           ],
           "tasks": [
             {
-              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "825911e8-a956-4f63-af21-8229dead103d",
+              "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -857,7 +857,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.357Z"
+              "created": "2026-10-06T00:40:36.062Z"
             }
           ],
           "runs": [],
@@ -918,7 +918,7 @@
         "body": {
           "plans": [
             {
-              "id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -926,13 +926,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "df9cdcc6-7b21-47ca-9bcb-6022670b795e"
+              "owner_id": "01628bab-bec8-4ac5-8537-a48259a8a2bd"
             }
           ],
           "tasks": [
             {
-              "id": "a34e8769-72e0-46a7-96af-930adc609bc9",
-              "plan_id": "51c3c4c8-79d8-47fc-984c-2299657881b6",
+              "id": "982b1200-395d-4a43-8756-9d858a14d5e5",
+              "plan_id": "9f937b3e-513c-4fc0-9610-6a3ed9ba5999",
               "title": "B 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -940,7 +940,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.361Z"
+              "created": "2026-10-06T00:40:36.067Z"
             }
           ],
           "runs": [],
@@ -1004,7 +1004,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "expires": 1791275836646
+          "expires": 1791276037296
         }
       }
     },
@@ -1035,7 +1035,7 @@
           "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
           "weekStart": "월요일",
           "initialRule": "하루 30분",
-          "created": "2026-10-06T00:37:16.670Z",
+          "created": "2026-10-06T00:40:37.317Z",
           "days": [],
           "change": null
         }
@@ -1068,12 +1068,12 @@
           "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
           "weekStart": "월요일",
           "initialRule": "하루 30분",
-          "created": "2026-10-06T00:37:16.670Z",
+          "created": "2026-10-06T00:40:37.317Z",
           "days": [
             {
-              "id": "e16b5886-326b-46d5-b9de-e6464d056b8b",
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
               "date": "2026-10-06",
-              "at": "2026-10-06T00:37:16.673Z",
+              "at": "2026-10-06T00:40:37.320Z",
               "minutes": 30,
               "note": "테스트용, 실제 사용자 기록이 아님",
               "outlierReason": "",
@@ -1127,6 +1127,499 @@
       }
     },
     {
+      "label": "가상 달력 검증용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791362437326
+        }
+      }
+    },
+    {
+      "label": "가상 날짜 2일차 기록",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 20,
+          "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:40:37.317Z",
+          "days": [
+            {
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:40:37.320Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+              "date": "2026-10-07",
+              "at": "2026-10-07T00:40:37.326Z",
+              "minutes": 20,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            }
+          ],
+          "change": null
+        }
+      }
+    },
+    {
+      "label": "가상 달력 검증용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791448837326
+        }
+      }
+    },
+    {
+      "label": "가상 3일차 규칙 변경 전 기록 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 35,
+          "note": "시뮬레이션"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "3일차 기록 전에 계획 규칙 하나를 변경해 주세요."
+        }
+      }
+    },
+    {
+      "label": "가상 2일차 뒤 규칙 변경",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "change",
+          "rule": "하루 40분",
+          "reason": "검증용 가상 달력, 실제 사용자 판단 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:40:37.317Z",
+          "days": [
+            {
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:40:37.320Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+              "date": "2026-10-07",
+              "at": "2026-10-07T00:40:37.326Z",
+              "minutes": 20,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            }
+          ],
+          "change": {
+            "at": "2026-10-08T00:40:37.326Z",
+            "rule": "하루 40분",
+            "reason": "검증용 가상 달력, 실제 사용자 판단 아님",
+            "references": [
+              "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "bf5e9f75-f956-4b3d-bde2-07a0b0fce740"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "label": "두 번째 규칙 변경 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "change",
+          "rule": "하루 50분",
+          "reason": "중복 변경"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "2일차 기록 뒤, 3일차 기록 전에 한 번만 변경할 수 있어요."
+        }
+      }
+    },
+    {
+      "label": "가상 날짜 3일차 기록",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 30,
+          "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:40:37.317Z",
+          "days": [
+            {
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:40:37.320Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+              "date": "2026-10-07",
+              "at": "2026-10-07T00:40:37.326Z",
+              "minutes": 20,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "b7c0de02-91e8-4384-add4-0a07e29bc929",
+              "date": "2026-10-08",
+              "at": "2026-10-08T00:40:37.326Z",
+              "minutes": 30,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            }
+          ],
+          "change": {
+            "at": "2026-10-08T00:40:37.326Z",
+            "rule": "하루 40분",
+            "reason": "검증용 가상 달력, 실제 사용자 판단 아님",
+            "references": [
+              "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "bf5e9f75-f956-4b3d-bde2-07a0b0fce740"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "label": "가상 달력 검증용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791535237326
+        }
+      }
+    },
+    {
+      "label": "가상 날짜 4일차 기록",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 40,
+          "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:40:37.317Z",
+          "days": [
+            {
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:40:37.320Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+              "date": "2026-10-07",
+              "at": "2026-10-07T00:40:37.326Z",
+              "minutes": 20,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "b7c0de02-91e8-4384-add4-0a07e29bc929",
+              "date": "2026-10-08",
+              "at": "2026-10-08T00:40:37.326Z",
+              "minutes": 30,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            },
+            {
+              "id": "9b2a1b6a-fb2c-4797-86a8-80a6e9d6f428",
+              "date": "2026-10-09",
+              "at": "2026-10-09T00:40:37.326Z",
+              "minutes": 40,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            }
+          ],
+          "change": {
+            "at": "2026-10-08T00:40:37.326Z",
+            "rule": "하루 40분",
+            "reason": "검증용 가상 달력, 실제 사용자 판단 아님",
+            "references": [
+              "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "bf5e9f75-f956-4b3d-bde2-07a0b0fce740"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "label": "가상 달력 검증용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "test-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791621637326
+        }
+      }
+    },
+    {
+      "label": "가상 날짜 5일차 기록",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 50,
+          "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "question": "계획 규칙을 바꾸면 집중 시간이 늘어날까?",
+          "metric": "하루 집중 학습 시간",
+          "unit": "분",
+          "calculation": "실제로 집중한 시간만 정수 분으로 기록하고 일별 합계의 합계·산술평균을 계산한다.",
+          "missing": "누락은 0으로 바꾸지 않고 미기록으로 남긴다. 정확히 5일이 기록되어야 완주한다.",
+          "duplicate": "서울 날짜별 1건만 저장하며 같은 날짜의 추가 저장은 거절한다.",
+          "outlier": "0~1440분 범위만 허용하고 600분 초과는 확인 사유를 함께 남긴다. 범위 내 실제값은 제외하지 않는다.",
+          "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
+          "weekStart": "월요일",
+          "initialRule": "하루 30분",
+          "created": "2026-10-06T00:40:37.317Z",
+          "days": [
+            {
+              "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "date": "2026-10-06",
+              "at": "2026-10-06T00:40:37.320Z",
+              "minutes": 30,
+              "note": "테스트용, 실제 사용자 기록이 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+              "date": "2026-10-07",
+              "at": "2026-10-07T00:40:37.326Z",
+              "minutes": 20,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 30분"
+            },
+            {
+              "id": "b7c0de02-91e8-4384-add4-0a07e29bc929",
+              "date": "2026-10-08",
+              "at": "2026-10-08T00:40:37.326Z",
+              "minutes": 30,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            },
+            {
+              "id": "9b2a1b6a-fb2c-4797-86a8-80a6e9d6f428",
+              "date": "2026-10-09",
+              "at": "2026-10-09T00:40:37.326Z",
+              "minutes": 40,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            },
+            {
+              "id": "c76c8f1a-fcc5-4a14-8f31-5a531850a054",
+              "date": "2026-10-10",
+              "at": "2026-10-10T00:40:37.326Z",
+              "minutes": 50,
+              "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+              "outlierReason": "",
+              "rule": "하루 40분"
+            }
+          ],
+          "change": {
+            "at": "2026-10-08T00:40:37.326Z",
+            "rule": "하루 40분",
+            "reason": "검증용 가상 달력, 실제 사용자 판단 아님",
+            "references": [
+              "be236a55-ce45-448f-8de4-a455ff3aa424",
+              "bf5e9f75-f956-4b3d-bde2-07a0b0fce740"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "label": "가상 6번째 날짜 기록 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/experiment",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "day",
+          "minutes": 10,
+          "note": "초과 기록"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": "5일 기록이 완료됐어요."
+        }
+      }
+    },
+    {
+      "label": "달력 시뮬레이션 구분",
+      "note": "위 가상 2~5일차는 흐름 자동검증이며 실제 사용자 기록·실제 5일 완주 증거가 아니다."
+    },
+    {
       "label": "내 자료 전체 내보내기",
       "request": {
         "method": "GET",
@@ -1141,7 +1634,7 @@
         "body": {
           "plans": [
             {
-              "id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 자료",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -1149,10 +1642,10 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             },
             {
-              "id": "7013e8d9-d2ea-4366-b923-ef8726a9712d",
+              "id": "8f3d989d-2062-4835-ae40-fd74e87262db",
               "title": "위조 소유자 테스트",
               "start": "2026-10-06",
               "end": "2026-12-31",
@@ -1160,13 +1653,13 @@
               "criterion": "집중 학습",
               "estimate": 30,
               "improvement": "",
-              "owner_id": "2af57fc8-a1a9-4aa4-98ac-cc9a24bbf21a"
+              "owner_id": "d72fca3c-29b2-4dfb-89a1-e3dc475cfc29"
             }
           ],
           "tasks": [
             {
-              "id": "72d6421f-e889-4f2e-8d5a-6d54f51c117b",
-              "plan_id": "388f119d-83d7-4637-9223-f703be1662ca",
+              "id": "825911e8-a956-4f63-af21-8229dead103d",
+              "plan_id": "bc559e51-275c-4c17-bb3a-7fd45d5c4d21",
               "title": "A 학습",
               "due": "2026-12-31",
               "priority": "보통",
@@ -1174,7 +1667,7 @@
               "estimate": 30,
               "status": "active",
               "deleted": 0,
-              "created": "2026-10-06T00:37:15.357Z"
+              "created": "2026-10-06T00:40:36.062Z"
             }
           ],
           "runs": [],
@@ -1192,21 +1685,65 @@
             "rounding": "기록은 정수 분, 평균은 소수점 첫째 자리 반올림.",
             "weekStart": "월요일",
             "initialRule": "하루 30분",
-            "created": "2026-10-06T00:37:16.670Z",
+            "created": "2026-10-06T00:40:37.317Z",
             "days": [
               {
-                "id": "e16b5886-326b-46d5-b9de-e6464d056b8b",
+                "id": "be236a55-ce45-448f-8de4-a455ff3aa424",
                 "date": "2026-10-06",
-                "at": "2026-10-06T00:37:16.673Z",
+                "at": "2026-10-06T00:40:37.320Z",
                 "minutes": 30,
                 "note": "테스트용, 실제 사용자 기록이 아님",
                 "outlierReason": "",
                 "rule": "하루 30분"
+              },
+              {
+                "id": "bf5e9f75-f956-4b3d-bde2-07a0b0fce740",
+                "date": "2026-10-07",
+                "at": "2026-10-07T00:40:37.326Z",
+                "minutes": 20,
+                "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+                "outlierReason": "",
+                "rule": "하루 30분"
+              },
+              {
+                "id": "b7c0de02-91e8-4384-add4-0a07e29bc929",
+                "date": "2026-10-08",
+                "at": "2026-10-08T00:40:37.326Z",
+                "minutes": 30,
+                "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+                "outlierReason": "",
+                "rule": "하루 40분"
+              },
+              {
+                "id": "9b2a1b6a-fb2c-4797-86a8-80a6e9d6f428",
+                "date": "2026-10-09",
+                "at": "2026-10-09T00:40:37.326Z",
+                "minutes": 40,
+                "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+                "outlierReason": "",
+                "rule": "하루 40분"
+              },
+              {
+                "id": "c76c8f1a-fcc5-4a14-8f31-5a531850a054",
+                "date": "2026-10-10",
+                "at": "2026-10-10T00:40:37.326Z",
+                "minutes": 50,
+                "note": "가상 달력 자동검증. 실제 5일 사용 증거 아님",
+                "outlierReason": "",
+                "rule": "하루 40분"
               }
             ],
-            "change": null
+            "change": {
+              "at": "2026-10-08T00:40:37.326Z",
+              "rule": "하루 40분",
+              "reason": "검증용 가상 달력, 실제 사용자 판단 아님",
+              "references": [
+                "be236a55-ce45-448f-8de4-a455ff3aa424",
+                "bf5e9f75-f956-4b3d-bde2-07a0b0fce740"
+              ]
+            }
           },
-          "exported_at": "2026-10-06T00:37:16.683Z",
+          "exported_at": "2026-10-06T00:40:38.962Z",
           "timezone": "Asia/Seoul",
           "unit": "minutes"
         }
@@ -1228,7 +1765,7 @@
         "status": 200,
         "body": {
           "ok": true,
-          "expires": 1791275837108
+          "expires": 1791276039403
         }
       }
     },

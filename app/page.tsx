@@ -2,7 +2,7 @@
 import {useEffect,useState} from 'react';
 import Diary from '@/components/diary';
 import Experiment from '@/components/experiment';
-export default function Home(){const [user,setUser]=useState<any>(null),[ready,setReady]=useState(false),[signup,setSignup]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),[view,setView]=useState('diary');
+export default function Home(){const [user,setUser]=useState<any>(null),[ready,setReady]=useState(true),[signup,setSignup]=useState(false),[error,setError]=useState(''),[busy,setBusy]=useState(false),[view,setView]=useState('diary');
 async function check(){try{const r=await fetch('/api/auth',{cache:'no-store'});setUser(r.ok?await r.json():null);}finally{setReady(true);}}useEffect(()=>{check();},[]);
 async function auth(b:any){setBusy(true);setError('');try{const r=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});const d:any=await r.json();if(!r.ok)throw Error(d.error);return d;}catch(e){setError((e as Error).message);return null;}finally{setBusy(false);}}
 if(!ready)return <main><p>로그인 상태를 확인하고 있어요.</p></main>;

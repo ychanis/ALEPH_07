@@ -8,6 +8,8 @@
 - T06 고정 소스: https://github.com/ychanis/ALEPH_06/tree/42000913e5c7618ee1952557bf9a899d5a7bf058
 - [인증 설명서](t07/AUTH_IMPLEMENTATION.md)
 - [실제 요청·응답 기록](t07/evidence-local.json)
+- [배포 API 요청·응답 기록](t07/evidence-live.json)
+- [처음 시작·GitHub 업로드 안내](t07/START_HERE.md)
 - [5일 기록·검산 안내](t07/FIVE_DAYS.md)
 - [제출 초안](t07/SUBMISSION_DRAFT.md)
 
@@ -30,7 +32,7 @@ node node_modules/typescript/bin/tsc --noEmit
 npm run build
 ```
 
-자동 확인은 실제 API 코드에 HTTP 요청을 보내고 메모리 SQLite로 D1 동작을 대체합니다. 운영 Cloudflare 환경의 확인과 구분합니다. 테스트는 임시 계정을 생성하고 비밀번호와 세션값을 가린 JSON을 기록합니다.
+로컬 58항목과 배포 API 45항목이 통과했습니다. 자동 확인은 실제 API 코드에 HTTP 요청을 보내고 메모리 SQLite로 D1 동작을 대체합니다. 운영 Cloudflare 환경의 확인과 구분합니다. 테스트는 임시 계정을 생성하고 비밀번호와 세션값을 가린 JSON을 기록합니다.
 
 Git 이력 확인:
 

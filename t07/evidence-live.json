@@ -1,0 +1,1177 @@
+{
+  "environment": "Cloudflare Workers / D1 배포 API. 임시 테스트 계정은 확인 후 삭제. 브라우저 시각 확인은 별도.",
+  "origin": "https://pds-diary-yc.ksyji123.chatgpt.site",
+  "executed_at": "2026-10-06T00:48:22.646Z",
+  "passed": 45,
+  "records": [
+    {
+      "label": "공개 첫 화면",
+      "request": {
+        "method": "GET",
+        "path": "/"
+      },
+      "response": {
+        "status": 200
+      },
+      "note": "인증 상태 확인 후 로그인 UI를 표시하는 클라이언트 앱. 브라우저 시각 확인은 미실시."
+    },
+    {
+      "label": "가입 t07-e5fb0c34-6-a",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "t07-e5fb0c34-6-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "가입 t07-e5fb0c34-6-b",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "t07-e5fb0c34-6-b",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 201,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "중복 가입 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "signup",
+          "username": "t07-e5fb0c34-6-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 409,
+        "body": {
+          "error": "이미 가입된 아이디예요."
+        }
+      }
+    },
+    {
+      "label": "틀린 비밀번호",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "아이디 또는 비밀번호를 확인해 주세요."
+        }
+      }
+    },
+    {
+      "label": "없는 아이디",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-none",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "아이디 또는 비밀번호를 확인해 주세요."
+        }
+      }
+    },
+    {
+      "label": "로그인 t07-e5fb0c34-6-a",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791276190616
+        }
+      }
+    },
+    {
+      "label": "로그인 t07-e5fb0c34-6-b",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-b",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791276198946
+        }
+      }
+    },
+    {
+      "label": "내 계획 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "value": {
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "API 보안 검증",
+            "estimate": 30,
+            "improvement": "",
+            "title": "test-0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "a2e8fc8f-315c-44db-821d-7c029c90c28d"
+        }
+      }
+    },
+    {
+      "label": "내 할 일 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+            "title": "test-task-0",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 30
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972"
+        }
+      }
+    },
+    {
+      "label": "내 자료 읽기 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=620fa964-cf74-4ec2-9c57-2acb6bf69972",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+          "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+          "title": "test-task-0",
+          "due": "2026-12-31",
+          "priority": "보통",
+          "tags": "",
+          "estimate": 30,
+          "status": "active",
+          "deleted": 0,
+          "created": "2026-10-06T00:43:33.322Z"
+        }
+      }
+    },
+    {
+      "label": "내 계획 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "value": {
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "API 보안 검증",
+            "estimate": 30,
+            "improvement": "",
+            "title": "test-1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "898ded34-d660-4733-8ea9-44d6c2949340"
+        }
+      }
+    },
+    {
+      "label": "내 할 일 생성",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+            "title": "test-task-1",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 30
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "9c378064-351a-440b-937e-448ae523787b"
+        }
+      }
+    },
+    {
+      "label": "내 자료 읽기 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=9c378064-351a-440b-937e-448ae523787b",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "9c378064-351a-440b-937e-448ae523787b",
+          "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+          "title": "test-task-1",
+          "due": "2026-12-31",
+          "priority": "보통",
+          "tags": "",
+          "estimate": 30,
+          "status": "active",
+          "deleted": 0,
+          "created": "2026-10-06T00:43:53.904Z"
+        }
+      }
+    },
+    {
+      "label": "정상 목록",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-0",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "6bc6df75-6571-4f04-8cb9-24a3c4a6a2ae"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+              "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-task-0",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:33.322Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "정상 목록",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-1",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "9c378064-351a-440b-937e-448ae523787b",
+              "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-task-1",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:53.904Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "0→1 읽기 차단",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=9c378064-351a-440b-937e-448ae523787b",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "0→1 수정 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "id": "9c378064-351a-440b-937e-448ae523787b",
+            "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+            "title": "tampered",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "0→1 삭제 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete",
+          "id": "9c378064-351a-440b-937e-448ae523787b"
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "0→1 남의 자료 생성 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+            "title": "intruder",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "1→0 읽기 차단",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?kind=tasks&id=620fa964-cf74-4ec2-9c57-2acb6bf69972",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "1→0 수정 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+            "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+            "title": "tampered",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "1→0 삭제 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete",
+          "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972"
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "1→0 남의 자료 생성 차단",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "task",
+          "value": {
+            "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+            "title": "intruder",
+            "due": "2026-12-31",
+            "priority": "보통",
+            "tags": "",
+            "estimate": 0
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": "자료를 찾을 수 없어요."
+        }
+      }
+    },
+    {
+      "label": "거절 뒤 자료·건수 불변",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-0",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "6bc6df75-6571-4f04-8cb9-24a3c4a6a2ae"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+              "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-task-0",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:33.322Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "거절 뒤 자료·건수 불변",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-1",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "9c378064-351a-440b-937e-448ae523787b",
+              "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-task-1",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:53.904Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "B 계정 ID 확인",
+      "request": {
+        "method": "GET",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f",
+          "username": "t07-e5fb0c34-6-b",
+          "expires": 1791276198946
+        }
+      }
+    },
+    {
+      "label": "URL·헤더 위조",
+      "request": {
+        "method": "GET",
+        "path": "/api/data?user_id=8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]",
+          "X-User-Id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-0",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "6bc6df75-6571-4f04-8cb9-24a3c4a6a2ae"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+              "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-task-0",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:33.322Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "본문 소유자 위조",
+      "request": {
+        "method": "POST",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "plan",
+          "user_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f",
+          "value": {
+            "start": "2026-10-06",
+            "end": "2026-12-31",
+            "priority": "보통",
+            "criterion": "API 보안 검증",
+            "estimate": 30,
+            "improvement": "",
+            "title": "owner-spoof",
+            "owner_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "id": "88195a35-4fb0-4d53-8a1d-163b258f91c7"
+        }
+      }
+    },
+    {
+      "label": "본문 위조 후 B 자료 불변",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-1",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "9c378064-351a-440b-937e-448ae523787b",
+              "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-task-1",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:53.904Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "비로그인 직접 요청",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {},
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "인증 없이 내보내기 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/export",
+        "headers": {},
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "소유자 확인 없이 기존자료 이관 거절",
+      "request": {
+        "method": "POST",
+        "path": "/api/migrate",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {}
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": "과제 6 소유자의 ChatGPT 계정 확인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "로그아웃 직전 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-0",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "6bc6df75-6571-4f04-8cb9-24a3c4a6a2ae"
+            },
+            {
+              "id": "88195a35-4fb0-4d53-8a1d-163b258f91c7",
+              "title": "owner-spoof",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "6bc6df75-6571-4f04-8cb9-24a3c4a6a2ae"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "620fa964-cf74-4ec2-9c57-2acb6bf69972",
+              "plan_id": "a2e8fc8f-315c-44db-821d-7c029c90c28d",
+              "title": "test-task-0",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:33.322Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "로그아웃",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "logout"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "같은 주소·방식·기존 쿠키 재사용 차단",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "비밀번호 변경 전 성공",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "plans": [
+            {
+              "id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-1",
+              "start": "2026-10-06",
+              "end": "2026-12-31",
+              "priority": "보통",
+              "criterion": "API 보안 검증",
+              "estimate": 30,
+              "improvement": "",
+              "owner_id": "8d6b5bc1-7d10-4a8d-a63a-0756e684bb1f"
+            }
+          ],
+          "tasks": [
+            {
+              "id": "9c378064-351a-440b-937e-448ae523787b",
+              "plan_id": "898ded34-d660-4733-8ea9-44d6c2949340",
+              "title": "test-task-1",
+              "due": "2026-12-31",
+              "priority": "보통",
+              "tags": "",
+              "estimate": 30,
+              "status": "active",
+              "deleted": 0,
+              "created": "2026-10-06T00:43:53.904Z"
+            }
+          ],
+          "runs": [],
+          "revisions": [],
+          "completions": [],
+          "reviews": []
+        }
+      }
+    },
+    {
+      "label": "비밀번호 변경",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "password",
+          "password": "[REDACTED]",
+          "newPassword": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "변경 뒤 기존 세션 차단",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "삭제용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-a",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791276458497
+        }
+      }
+    },
+    {
+      "label": "테스트 계정·자료 삭제",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete-account",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "삭제된 계정 세션 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    },
+    {
+      "label": "삭제용 재로그인",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {},
+        "body": {
+          "action": "login",
+          "username": "t07-e5fb0c34-6-b",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "expires": 1791276483505
+        }
+      }
+    },
+    {
+      "label": "테스트 계정·자료 삭제",
+      "request": {
+        "method": "POST",
+        "path": "/api/auth",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": {
+          "action": "delete-account",
+          "password": "[REDACTED]"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "label": "삭제된 계정 세션 거절",
+      "request": {
+        "method": "GET",
+        "path": "/api/data",
+        "headers": {
+          "Cookie": "pds_session=[REDACTED]"
+        },
+        "body": null
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": "로그인이 필요해요."
+        }
+      }
+    }
+  ]
+}
